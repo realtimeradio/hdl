@@ -121,6 +121,10 @@ proc adi_project {project_name {mode 0} {parameter_list {}} } {
     set device "xc7vx690tffg1761-2"
     set board [lindex [lsearch -all -inline [get_board_parts] *vc709*] end]
   }
+  if [regexp "_iwave_zu11$" $project_name] {
+    set device "xczu11eg-ffvc1760-1-i"
+    set board "not-applicable"
+  }
 
   adi_project_create $project_name $mode $parameter_list $device $board
 }

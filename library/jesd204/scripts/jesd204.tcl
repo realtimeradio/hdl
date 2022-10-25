@@ -465,6 +465,9 @@ proc adi_tpl_jesd204_rx_create {ip_name num_of_lanes num_of_converters samples_p
 proc adi_jesd204_calc_tpl_width {link_datapath_width jesd_l jesd_m jesd_s jesd_np {tpl_datapath_width {}}} {
 
   set jesd_f [expr ($jesd_m*$jesd_s*$jesd_np)/(8*$jesd_l)]
+  if {$jesd_f < 1} {
+    return -code 1 "ERROR: JESD_F cannot be < 1"
+  }
 
   if {$tpl_datapath_width != ""} {
     set tpl_div [expr $tpl_datapath_width / $jesd_f]

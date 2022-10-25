@@ -41,7 +41,7 @@ module system_top  #(
   parameter RX_JESD_L = 8,
   parameter RX_NUM_LINKS = 1,
   parameter SHARED_DEVCLK = 0,
-  parameter JESD_MODE = "8B10B"
+  parameter JESD_MODE = "64B66B"
 ) (
   //input  [12:0] gpio_bd_i, //JH override with 0
   output [ 7:0] gpio_bd_o,
@@ -102,6 +102,7 @@ module system_top  #(
 
   wire            ref_clk;
   wire            sysref;
+  wire            link_clk;
   wire    [TX_NUM_LINKS-1:0]   tx_syncin;
   wire    [RX_NUM_LINKS-1:0]   rx_syncout;
 
@@ -301,11 +302,12 @@ module system_top  #(
     .tx_data_7_p (tx_data_p_loc[7]),
     .ref_clk_q0 (ref_clk),
     .ref_clk_q1 (ref_clk),
-    .rx_device_clk (rx_device_clk),
-    .tx_device_clk (tx_device_clk),
+    .rx_device_clk (link_clk),//rx_device_clk),
+    .tx_device_clk (link_clk),//tx_device_clk),
     .rx_sync_0 (rx_syncout),
     .tx_sync_0 (tx_syncin),
     .rx_sysref_0 (sysref),
+    .link_clk_out(link_clk),
     .tx_sysref_0 (sysref));
 
   assign rx_data_p_loc[RX_JESD_L*RX_NUM_LINKS-1:0] = rx_data_p[RX_JESD_L*RX_NUM_LINKS-1:0];

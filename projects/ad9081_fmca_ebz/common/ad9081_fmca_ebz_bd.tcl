@@ -123,6 +123,7 @@ set dac_fifo_address_width [expr int(ceil(log(($dac_fifo_samples_per_converter*$
 
 create_bd_port -dir I rx_device_clk
 create_bd_port -dir I tx_device_clk
+create_bd_port -dir O link_clk_out
 
 # common xcvr
 if {$ADI_PHY_SEL == 1} {
@@ -286,6 +287,7 @@ if {$ADI_PHY_SEL == 1} {
 
   ad_connect  $sys_cpu_resetn util_mxfe_xcvr/up_rstn
   ad_connect  $sys_cpu_clk util_mxfe_xcvr/up_clk
+  ad_connect  [get_bd_ports link_clk_out] [get_bd_pins util_mxfe_xcvr/rx_out_clk_0]
 
   # connections (adc)
 
